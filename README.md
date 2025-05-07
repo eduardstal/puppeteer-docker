@@ -10,7 +10,8 @@ n8n json nodes included, just update the IP addresses and you are good to go.  T
 
 compatible with any VNC viewer.  
 
-Intended to be used with: https://github.com/conor-is-my-name/n8n-autoscaling
+Intened to be used with this n8n build: 
+https://github.com/conor-is-my-name/n8n-autoscaling 
 
 If not using the n8n build linked above, you will need to install and enable puppeteer or playwright in your existing n8n install.  
 

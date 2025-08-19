@@ -28,7 +28,7 @@ export DISPLAY=:$DISPLAY_NUMBER
 echo "Starting X server on display $DISPLAY"
 
 # Start Xvfb on the available display
-Xvfb $DISPLAY -screen 0 1024x768x24 &
+Xvfb $DISPLAY -screen 0 1920x1080x24 &
 
 # Start x11vnc
 x11vnc -display $DISPLAY -usepw -forever -quiet &

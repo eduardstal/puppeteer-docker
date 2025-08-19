@@ -82,7 +82,6 @@ const humanDelay = (min = 1000, max = 3000) => {
         await page.goto('https://google.com', { waitUntil: 'networkidle2' });
         
         await humanDelay(2000, 4000);
-        await cursor.move('input[name="q"]');
         
         console.log('Successfully loaded Google.com with anti-detection (per-page only)');
         console.log('Note: Manual VNC tabs will not have anti-detection features');

@@ -7,6 +7,11 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "puppeteer": "^22.0.0"
+    "puppeteer": "npm:rebrowser-puppeteer@^24.8.1",
+    "puppeteer-core": "npm:rebrowser-puppeteer-core@^24.8.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "ghost-cursor": "^1.2.2",
+    "user-agents": "^1.1.0"
   }
 }

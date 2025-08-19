@@ -7,24 +7,73 @@ RUN apt-get update && apt-get install -y nginx
 # Copy Nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Install dependencies for running Chrome, an X server, VNC server, and Nginx
+# Install comprehensive system components for realistic fingerprinting
 RUN apt-get update && \
-    apt-get install -yq net-tools gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
+    apt-get install -yq \
+    # Core Chrome dependencies
+    net-tools gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
     libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
     libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 \
     libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
     ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils \
+    # X11 and VNC infrastructure
     xvfb x11vnc x11-xkb-utils xfonts-100dpi xfonts-75dpi xfonts-scalable dbus-x11 x11-apps \
-    nginx
+    nginx \
+    # Comprehensive font packages for realistic fingerprinting
+    fonts-dejavu-core fonts-freefont-ttf fonts-liberation fonts-liberation2 \
+    fonts-noto-core fonts-noto-ui-core fonts-noto-color-emoji fonts-noto-cjk \
+    fonts-opensymbol fonts-symbola fonts-ubuntu fonts-ubuntu-console \
+    fonts-droid-fallback fonts-takao-pgothic fonts-arphic-ukai fonts-arphic-uming \
+    fonts-ipafont-gothic fonts-ipafont-mincho fonts-unfonts-core \
+    # Microsoft Core Fonts (realistic Windows font matching)
+    ttf-mscorefonts-installer \
+    # Audio system (for realistic media capabilities)
+    pulseaudio pulseaudio-utils alsa-utils alsa-base libasound2-plugins \
+    libpulse0 libpulsedsp0 \
+    # Graphics and WebGL support
+    mesa-utils libgl1-mesa-dri libgl1-mesa-glx libglapi-mesa \
+    libglu1-mesa libxcomposite1 libxdamage1 libxrandr2 \
+    # Media codecs (H.264, WebM, etc.)
+    gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
+    gstreamer1.0-pulseaudio gstreamer1.0-tools libavcodec58 \
+    # System utilities that real systems have
+    curl wget gnupg2 software-properties-common apt-transport-https \
+    # Locale support for geographic consistency
+    locales locales-all \
+    # Additional system libraries for completeness
+    libgtk2.0-0 libxss1 libappindicator3-1 libindicator7 \
+    libdbusmenu-glib4 libdbusmenu-gtk3-4 \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install latest version of google-chrome-stable
+# Install latest version of google-chrome-stable with additional font support
 RUN apt-get update && apt-get install -y wget --no-install-recommends \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
     && apt-get update \
-    && apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf \
+    && apt-get install -y google-chrome-stable \
+    fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
+
+# Configure system locales for realistic geographic fingerprinting
+RUN locale-gen en_US.UTF-8 && \
+    update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+
+# Set up realistic system environment variables
+ENV LANG=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    TZ=America/New_York
+
+# Configure audio system for realistic media capabilities
+RUN echo "autospawn = yes" >> /etc/pulse/client.conf && \
+    echo "enable-shm = yes" >> /etc/pulse/client.conf
+
+# Create realistic user structure (but still run as root for Chrome compatibility)
+RUN groupadd -g 1000 browser && \
+    useradd -u 1000 -g browser -G audio,video,pulse-access browser && \
+    mkdir -p /home/browser && \
+    chown browser:browser /home/browser
 
 # Use dumb-init to kill zombie processes
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_x86_64 /usr/local/bin/dumb-init

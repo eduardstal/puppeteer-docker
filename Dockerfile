@@ -43,12 +43,9 @@ RUN apt-get update && \
     libdbusmenu-glib4 libdbusmenu-gtk3-4 \
     && rm -rf /var/lib/apt/lists/*
 
-# Install latest version of google-chrome-stable with additional font support
-RUN apt-get update && apt-get install -y wget --no-install-recommends \
-    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
-    && apt-get update \
-    && apt-get install -y google-chrome-stable \
+# Install Chromium browser with additional font support (ARM64 compatible)
+RUN apt-get update && apt-get install -y \
+    chromium chromium-driver \
     fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
@@ -80,9 +77,9 @@ RUN chmod +x /usr/local/bin/dumb-init
 
 ENTRYPOINT ["dumb-init", "--"]
 
-ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/google-chrome-stable"
+ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium"
 
-# Puppeteer is packaged with Chromium, but we can skip the download since we are using google-chrome-stable
+# Puppeteer is packaged with Chromium, but we can skip the download since we are using system chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 RUN mkdir ~/.vnc

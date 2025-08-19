@@ -39,7 +39,7 @@ const humanDelay = (min = 1000, max = 3000) => {
         const browser = await puppeteer.launch({
             headless: false,
             defaultViewport: { width: 1920, height: 1080 },
-            executablePath: '/usr/bin/google-chrome-stable',
+            executablePath: '/usr/bin/chromium',
             args: getHardenedArgs(),
             ignoreDefaultArgs: ['--enable-automation'],
             env: {

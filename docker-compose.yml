@@ -1,5 +1,5 @@
 services:
-  headfulcontainer:
+  puppeteer:
     build: ./
     cap_add:
       - SYS_ADMIN
@@ -7,8 +7,8 @@ services:
       - '5900:5900'  # VNC server
       - '9223:9223'   # Nginx proxy for Chrome debugging
     networks:
-      - n8n_network
+      - n8n_stack_default
 
 networks:
-  n8n_network:
+  n8n_stack_default:
     driver: bridge

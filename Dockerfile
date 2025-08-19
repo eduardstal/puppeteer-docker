@@ -70,10 +70,8 @@ RUN groupadd -g 1001 browser && \
     mkdir -p /home/browser && \
     chown browser:browser /home/browser
 
-# Use dumb-init to kill zombie processes
-ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_x86_64 /usr/local/bin/dumb-init
-
-RUN chmod +x /usr/local/bin/dumb-init
+# Use dumb-init to kill zombie processes (install from package manager for correct architecture)
+RUN apt-get update && apt-get install -y dumb-init --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["dumb-init", "--"]
 

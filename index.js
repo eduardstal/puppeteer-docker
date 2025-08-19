@@ -15,7 +15,7 @@ const getHardenedArgs = () => [
     '--disable-ipc-flooding-protection',
     '--disable-background-timer-throttling',
     '--disable-renderer-backgrounding',
-    '--start-maximized',
+    '--window-size=1920,1080',
     '--disable-infobars',
     '--remote-debugging-port=9222',
     '--remote-debugging-address=0.0.0.0',
@@ -38,7 +38,7 @@ const humanDelay = (min = 1000, max = 3000) => {
         
         const browser = await puppeteer.launch({
             headless: false,
-            defaultViewport: { width: 1920, height: 1080 },
+            defaultViewport: null,
             executablePath: '/usr/bin/chromium',
             args: getHardenedArgs(),
             ignoreDefaultArgs: ['--enable-automation'],

@@ -11,8 +11,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 RUN apt-get update && \
     apt-get install -yq \
     # Core Chrome dependencies
-    net-tools gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
-    libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
+    net-tools libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
+    libexpat1 libfontconfig1 libgcc-s1 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
     libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 \
     libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
     ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils \
@@ -22,26 +22,24 @@ RUN apt-get update && \
     # Comprehensive font packages for realistic fingerprinting
     fonts-dejavu-core fonts-freefont-ttf fonts-liberation fonts-liberation2 \
     fonts-noto-core fonts-noto-ui-core fonts-noto-color-emoji fonts-noto-cjk \
-    fonts-opensymbol fonts-symbola fonts-ubuntu fonts-ubuntu-console \
-    fonts-droid-fallback fonts-takao-pgothic fonts-arphic-ukai fonts-arphic-uming \
+    fonts-opensymbol fonts-symbola \
+    fonts-droid-fallback fonts-arphic-ukai fonts-arphic-uming \
     fonts-ipafont-gothic fonts-ipafont-mincho fonts-unfonts-core \
-    # Microsoft Core Fonts (realistic Windows font matching)
-    ttf-mscorefonts-installer \
     # Audio system (for realistic media capabilities)
-    pulseaudio pulseaudio-utils alsa-utils alsa-base libasound2-plugins \
-    libpulse0 libpulsedsp0 \
+    pulseaudio pulseaudio-utils alsa-utils libasound2-plugins \
+    libpulse0 \
     # Graphics and WebGL support
     mesa-utils libgl1-mesa-dri libgl1-mesa-glx libglapi-mesa \
     libglu1-mesa libxcomposite1 libxdamage1 libxrandr2 \
     # Media codecs (H.264, WebM, etc.)
     gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
-    gstreamer1.0-pulseaudio gstreamer1.0-tools libavcodec58 \
+    gstreamer1.0-pulseaudio gstreamer1.0-tools libavcodec59 \
     # System utilities that real systems have
     curl wget gnupg2 software-properties-common apt-transport-https \
     # Locale support for geographic consistency
     locales locales-all \
     # Additional system libraries for completeness
-    libgtk2.0-0 libxss1 libappindicator3-1 libindicator7 \
+    libgtk2.0-0 libxss1 libappindicator3-1 \
     libdbusmenu-glib4 libdbusmenu-gtk3-4 \
     && rm -rf /var/lib/apt/lists/*
 

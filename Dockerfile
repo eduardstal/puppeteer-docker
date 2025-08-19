@@ -65,8 +65,8 @@ RUN echo "autospawn = yes" >> /etc/pulse/client.conf && \
     echo "enable-shm = yes" >> /etc/pulse/client.conf
 
 # Create realistic user structure (but still run as root for Chrome compatibility)
-RUN groupadd -g 1000 browser && \
-    useradd -u 1000 -g browser -G audio,video,pulse-access browser && \
+RUN groupadd -g 1001 browser && \
+    useradd -u 1001 -g browser -G audio,video,pulse-access browser && \
     mkdir -p /home/browser && \
     chown browser:browser /home/browser
 
